@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Système en Temps Réel</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+    <h1>Monitoring Système en Temps Réel</h1>
+    <div id="cpu_graph"></div>
+    <div id="memory_graph"></div>
+
+    <script>
+        function updateGraphs() {
+            fetch('/data')
+                .then(response => response.json())
+                .then(data => {
+                    let cpuTrace = {
+                        x: [...Array(data.cpu.length).keys()],
+                        y: data.cpu,
+                        mode: 'lines',
+                        name: 'Utilisation CPU'
+                    };
+                    let memTrace = {
+                        x: [...Array(data.memory.length).keys()],
+                        y: data.memory,
+                        mode: 'lines',
+                        name: 'Utilisation Mémoire'
+                    };
+
+                    Plotly.newPlot('cpu_graph', [cpuTrace], {
+                        title: 'Utilisation CPU'
+                    });
+                    Plotly.newPlot('memory_graph', [memTrace], {
+                        title: 'Utilisation Mémoire'
+                    });
+                });
+        }
+
+        setInterval(updateGraphs, 5000);
+        updateGraphs();
+    </script>
+</body>
+
+</html>

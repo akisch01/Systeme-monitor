@@ -1,0 +1,17 @@
+application a utiliser sur linux
+
+sudo apt install sox
+sox -n beep.wav synth 0.1 sine 1000
+
+
+pip install flask psutil
+python3 app.py
+
+sudo apt update
+sudo apt install postfix mailutils
+sudo nano /etc/postfix/main.cf
+sudo systemctl restart postfix
+
+
+gcc -o monitor monitor.c
+./monitor
